@@ -6,10 +6,10 @@ const Form = ({ onSubmitForm }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        onSubmitForm(inputText);
-        // console.log(inputText);
+        onSubmitForm(inputText); // pass input value through props
     }
 
+    // make enter key not submit form
     const handleKeyDown = (e) => {
         if (e.keyCode == 13) {
             e.preventDefault();
