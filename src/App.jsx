@@ -43,7 +43,7 @@ const App = () => {
         
         { notesList.length > 0 
           ? <button className='w-1/5 mb-2 mt-20 text-gray-400 text-sm hover:opacity-80' onClick={() => setNotesList([])}>CLEAR ALL</button>
-          : <button className='w-1/5 mb-2 mt-20 text-gray-400 text-sm'>NO NOTES</button>
+          : <p className='w-1/5 mb-2 mt-20 text-gray-400 text-sm'>NO NOTES</p>
         }
       </div>
       
