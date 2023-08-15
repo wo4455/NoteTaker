@@ -1,7 +1,9 @@
 import React from 'react';
 import Form from './components/Form';
 import Note from './components/Note';
+import Switch from 'react-switch';
 import './App.css'
+import ReactSwitch from 'react-switch';
 
 const colors = ['bg-red-400', 'bg-green-400', 'bg-blue-400', 'bg-yellow-400', 'bg-orange-400'];
 
@@ -12,6 +14,13 @@ const App = () => {
     const notesListClone = [ ...notesList ];
     const index = notesListClone.indexOf(item);
     notesListClone[index].isPinned = !notesListClone[index].isPinned;
+    setNotesList(notesListClone);
+  };
+
+  const handleDelete = (item) => { // remove deleted note from array
+    const notesListClone = [ ...notesList ];
+    const index = notesListClone.indexOf(item);
+    notesListClone.splice(index, 1);
     setNotesList(notesListClone);
   };
 
@@ -60,11 +69,15 @@ const App = () => {
               <Note
                 note={item} 
                 onPinned={() => handlePin(item)}
+                onDelete={() => handleDelete(item)}
                 key={item + index}
               />
             ))
         }
       </div>    
+      <div className='fixed bottom-0 w-[90vw] flex justify-end items-center p-8'>
+        <ReactSwitch />
+      </div>
     </>
   )
 }
