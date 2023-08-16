@@ -1,7 +1,5 @@
 #root {
-  max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
 }
 
@@ -34,6 +32,10 @@
   to {
     opacity: 100
   }
+}
+
+.pin-fade {
+  box-shadow: 0 30px 40px rgba(0,0,0,.1);
 }
 
 @media (prefers-reduced-motion: no-preference) {
