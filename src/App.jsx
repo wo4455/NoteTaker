@@ -1,15 +1,23 @@
 import React from 'react';
-import Form from './components/Form';
-import Note from './components/Note';
 import './App.css'
+import Search from './components/Search';
+import Note from './components/Note';
 import ReactSwitch from 'react-switch';
+import Popup from './components/Popup';
 
 const colors = ['bg-red-400', 'bg-green-400', 'bg-blue-400', 'bg-yellow-400', 'bg-orange-400'];
 const darkThemeColors = [ 'bg-[#AB00FF]', 'bg-[#33007B]', 'bg-[#8300C4]', 'bg-[#4C00A3]', 'bg-[#31004A]'];
 
+const Subtitle = ({ data, otherStyles }) => {
+  return (
+    <p className={`mb-2 text-gray-400 text-sm ${otherStyles}`}>{data}</p>
+  )
+};
+
 const App = () => {
   const [ notesList, setNotesList ] = React.useState([]);
-  const [ isDark, setDark ] = React.useState(false);
+  const [ isDark, setDark ] = React.useState(false); // theme
+  const [ popup, setPopup ] = React.useState(false); // popup
 
   const handlePin = (item) => { // set pinned to true/false
     const notesListClone = [ ...notesList ];
@@ -43,30 +51,18 @@ const App = () => {
     <div className={
       isDark ? 'bg-[#292929] py-10' : 'py-10'
       }>
-      <Form
-        onSubmitForm={
-          (inputValue) => {
-            setNotesList([
-              ...notesList,
-              {
-                data: inputValue,
-                order: notesList.length,
-                bgColor: getColor(),
-                isPinned: false,
-              },
-            ]);
-          }
-        }
-        isDark={isDark}
-      />
+      <Search isDark={isDark} />
       
       <div className='w-full flex justify-between'>
-        <p className='w-1/5 mb-2 mt-20 text-gray-400 text-sm'>PINNED</p>
+        <Subtitle otherStyles={'w-1/5 mt-20'} data={'PINNED'} />
         
-        { notesList.length > 0 
-          ? <button className='w-1/5 mb-2 mt-20 text-gray-400 text-sm hover:opacity-80' onClick={() => setNotesList([])}>CLEAR ALL</button>
-          : <p className='w-1/5 mb-2 mt-20 text-gray-400 text-sm'>NO NOTES</p>
-        }
+        <div className='w-1/5'>
+          { notesList.length > 0 
+            ? <button className='mb-2 mt-20 text-gray-400 text-sm hover:opacity-80' onClick={() => setNotesList([])}>CLEAR ALL</button>
+            : <Subtitle otherStyles={'mt-20'} data={'NO NOTES'} />
+          }
+        </div>
+        
       </div>
       
       <div className={`w-full h-screen ${isDark && 'bg-[#292929]'}`}>
@@ -91,7 +87,7 @@ const App = () => {
           }
         </div>    
         <div className='fixed bottom-0 right-0 p-5'>
-          <p className='mb-3 text-gray-400 text-sm'>Change Theme</p>
+          <Subtitle data={'Change Theme'} />
           <ReactSwitch 
           onChange={handleChangeTheme}
           checked={isDark}
@@ -100,6 +96,22 @@ const App = () => {
           />
         </div>
       </div>
+      <Popup activate isDark={isDark} 
+      onSubmit={
+        (title, inputText) => {
+          setNotesList([
+            ...notesList,
+            {
+              title: title,
+              data: inputText,
+              order: notesList.length,
+              bgColor: getColor(),
+              isPinned: false,
+            },
+          ]);
+        }
+      }
+      />
     </div>
   )
 }
