@@ -5,7 +5,7 @@ import { BsTrash } from 'react-icons/bs';
 
 const Note = ({ note, onPinned, onDelete, isDark }) => {
     return (
-        <div className={`w-1/4 ${note.bgColor} drop-shadow-md m-5 rounded-md ${note.isPinned ? 'border-solid pin-fade' : 'max-w-sm'}`}>
+        <div className={`z-0 w-1/4 ${note.bgColor} drop-shadow-md m-5 rounded-md ${note.isPinned ? 'border-solid pin-fade' : 'max-w-sm'}`}>
             <div className={'w-full p-3'}>
                 <div className='flex justify-between items-start'>
                     {note.isPinned

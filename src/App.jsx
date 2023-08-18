@@ -48,55 +48,56 @@ const App = () => {
   };
 
   return (
-    <div className={
-      isDark ? 'bg-[#292929] py-10' : 'py-10'
-      }>
-      <Search isDark={isDark} />
-      
-      <div className='w-full flex justify-between'>
-        <Subtitle otherStyles={'w-1/5 mt-20'} data={'PINNED'} />
+    <>
+      <div className={`py-10 ${isDark && 'bg-[#292929]'} ${popup && 'opacity-50'}`}>
+        <Search isDark={isDark} onTrigger={() => setPopup(true)}/>
         
-        <div className='w-1/5'>
-          { notesList.length > 0 
-            ? <button className='mb-2 mt-20 text-gray-400 text-sm hover:opacity-80' onClick={() => setNotesList([])}>CLEAR ALL</button>
-            : <Subtitle otherStyles={'mt-20'} data={'NO NOTES'} />
-          }
+        <div className='w-full flex justify-between'>
+          <Subtitle otherStyles={'w-1/5 mt-20'} data={'PINNED'} />
+          
+          <div className='w-1/5'>
+            { notesList.length > 0 
+              ? <button className='mb-2 mt-20 text-gray-400 text-sm hover:opacity-80' onClick={() => setNotesList([])}>CLEAR ALL</button>
+              : <Subtitle otherStyles={'mt-20'} data={'NO NOTES'} />
+            }
+          </div>
+          
+        </div>
+        
+        <div className={`w-full h-screen ${isDark && 'bg-[#292929]'}`}>
+          <div className={`w-full pb-5 flex flex-wrap justify-center items-start ${isDark && 'bg-[#292929]'}`}>
+            {
+              notesList
+                .sort((a, b) => {
+                  if (a.isPinned && b.isPinned) return 0;
+                  if (a.isPinned) return -1;
+                  if (b.isPinned) return 1;
+                  return a.order > b.order ? 1 : -1;
+                })
+                .map((item, index) => (
+                  <Note
+                    note={item} 
+                    onPinned={() => handlePin(item)}
+                    onDelete={() => handleDelete(item)}
+                    isDark={isDark}
+                    key={item + index}
+                  />
+                ))
+            }
+          </div>    
+          <div className='fixed bottom-0 right-0 p-5'>
+            <Subtitle data={'Change Theme'} />
+            <ReactSwitch 
+            onChange={handleChangeTheme}
+            checked={isDark}
+            checkedIcon={false}
+            uncheckedIcon={false}
+            />
+          </div>
         </div>
         
       </div>
-      
-      <div className={`w-full h-screen ${isDark && 'bg-[#292929]'}`}>
-        <div className={`w-full pb-5 flex flex-wrap justify-center items-start ${isDark && 'bg-[#292929]'}`}>
-          {
-            notesList
-              .sort((a, b) => {
-                if (a.isPinned && b.isPinned) return 0;
-                if (a.isPinned) return -1;
-                if (b.isPinned) return 1;
-                return a.order > b.order ? 1 : -1;
-              })
-              .map((item, index) => (
-                <Note
-                  note={item} 
-                  onPinned={() => handlePin(item)}
-                  onDelete={() => handleDelete(item)}
-                  isDark={isDark}
-                  key={item + index}
-                />
-              ))
-          }
-        </div>    
-        <div className='fixed bottom-0 right-0 p-5'>
-          <Subtitle data={'Change Theme'} />
-          <ReactSwitch 
-          onChange={handleChangeTheme}
-          checked={isDark}
-          checkedIcon={false}
-          uncheckedIcon={false}
-          />
-        </div>
-      </div>
-      <Popup activate isDark={isDark} 
+      <Popup activate={popup} isDark={isDark} 
       onSubmit={
         (title, inputText) => {
           setNotesList([
@@ -109,10 +110,12 @@ const App = () => {
               isPinned: false,
             },
           ]);
+          setPopup(false);
         }
       }
+      onCancel={() => setPopup(false)}
       />
-    </div>
+    </>
   )
 }
 

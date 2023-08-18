@@ -9,7 +9,7 @@ const Button = ({ data, otherStyles, onClick }) => {
     )
 };
 
-const Popup = ({ activate, isDark, onSubmit }) => {
+const Popup = ({ activate, isDark, onSubmit, onCancel }) => {
 const [ textCount, setTextCount ] = React.useState(0);
 const [ title, setTitle ] = React.useState('');
 const [ inputText, setInputText ] = React.useState('');
@@ -19,10 +19,15 @@ const handleInput = (e) => {
     setInputText(e.target.value);
 }
 
+const handleSubmit = () => {
+    onSubmit(title, inputText);
+    setTitle('');
+}
+
 return (activate) ? (
-    <div className='flex flex-col items-center justify-start w-2/3 m-auto'>
-        <div className={`heading text-center font-bold text-2xl m-5 ${isDark ? 'text-[#9BA3AF]' : 'text-gray-800'}`}>{title || 'New Note'}</div>
-        <div className={`editor ${isDark ? 'bg-[#616161] text-white' : 'border border-gray-300'} mx-auto w-10/12 flex flex-col text-gray-800 p-4 shadow-lg rounded-md max-w-2xl`}>
+    <div className='z-10 absolute top-36 left-60 flex flex-col items-center justify-start w-2/3 m-auto'>
+        <div className={`heading text-center font-bold text-2xl m-5 ${isDark ? 'text-white' : 'text-gray-800'}`}>{title || 'New Note'}</div>
+        <div className={`editor ${isDark ? 'bg-[#616161] text-white' : 'border border-gray-300 bg-white'} mx-auto w-10/12 flex flex-col text-gray-800 p-4 shadow-lg rounded-md max-w-2xl`}>
             <input 
             onChange={(e) => setTitle(e.target.value)}
             className={`title ${isDark ? 'bg-[#1F1F1F] border-none' : 'bg-gray-100'} border border-gray-300 p-2 mb-4 outline-none rounded-sm`} spellCheck="false" placeholder="Title" type="text"></input>
@@ -37,8 +42,8 @@ return (activate) ? (
                 </div>
                 
                 <div className="buttons flex">
-                    <Button data={'Cancel'} otherStyles={`border-gray-300 ${isDark ? 'text-gray-200' : 'text-gray-500'} ml-auto`}/>
-                    <Button data={'Post'} otherStyles={`text-gray-200 ml-2 ${isDark ? 'bg-[#8300C4]' : 'bg-indigo-500'} border-none`} onClick={() => onSubmit(title, inputText)}/>
+                    <Button data={'Cancel'} otherStyles={`border-gray-300 ${isDark ? 'text-gray-200' : 'text-gray-500'} ml-auto`} onClick={onCancel}/>
+                    <Button data={'Post'} otherStyles={`text-gray-200 ml-2 ${isDark ? 'bg-[#8300C4]' : 'bg-indigo-500'} border-none`} onClick={handleSubmit}/>
                 </div>
             </div>
         </div>
