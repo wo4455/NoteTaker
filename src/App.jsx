@@ -10,7 +10,7 @@ const darkThemeColors = [ 'bg-[#AB00FF]', 'bg-[#33007B]', 'bg-[#8300C4]', 'bg-[#
 
 const Subtitle = ({ data, otherStyles }) => {
   return (
-    <p className={`mb-2 text-gray-400 text-sm ${otherStyles}`}>{data}</p>
+    <p className={`${otherStyles} mb-2 text-gray-400 text-sm`}>{data}</p>
   )
 };
 
@@ -64,7 +64,7 @@ const App = () => {
           
         </div>
         
-        <div className={`w-full h-screen ${isDark && 'bg-[#292929]'}`}>
+        <div className={`w-full h-screen ${notesList.length == 0 ? 'flex justify-center items-center' : ''} ${isDark && 'bg-[#292929]'}`}>
           <div className={`w-full pb-5 flex flex-wrap justify-center items-start ${isDark && 'bg-[#292929]'}`}>
             {
               notesList
@@ -84,6 +84,12 @@ const App = () => {
                   />
                 ))
             }
+            {
+              notesList.length == 0 && (
+                <h1 className={`text-3xl mb-24 opacity-25 font-thin font-poppins ${isDark && 'text-[#9BA3AF]'}`}>nothing to see here. . .yet</h1>   
+              )
+            }
+            
           </div>    
           <div className='fixed bottom-0 right-0 p-5'>
             <Subtitle data={'Change Theme'} />

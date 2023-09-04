@@ -22,6 +22,7 @@ const handleInput = (e) => {
 const handleSubmit = () => {
     onSubmit(title, inputText);
     setTitle('');
+    setInputText('');
 }
 
 return (activate) ? (
