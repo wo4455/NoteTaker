@@ -71,7 +71,6 @@ If you'd like to contribute to NoteTaker, contact Will Otwell.
 ## Coming Soon
 - Functionality for editing specific notes content/title just by clicking on the note itself.
 - Search for specific notes both by title and content.
-- Idle message when there are zero notes
 
 NoteTaker is all about making note-taking a breeze. Start using it today and stay organized effortlessly.
 
