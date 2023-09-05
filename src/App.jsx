@@ -86,7 +86,7 @@ const App = () => {
             }
             {
               notesList.length == 0 && (
-                <h1 className={`text-3xl mb-24 opacity-25 font-thin font-poppins ${isDark && 'text-[#9BA3AF]'}`}>nothing to see here. . .yet</h1>   
+                <h1 className={`text-xl italic mb-20 opacity-25 font-thin font-poppins ${isDark && 'text-[#9BA3AF]'}`}>nothing to see here. . .yet</h1>   
               )
             }
             
